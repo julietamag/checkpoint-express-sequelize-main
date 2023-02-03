@@ -119,7 +119,7 @@ describe("El modelo `Article`", function () {
        *
        * https://sequelize.org/docs/v6/core-concepts/getters-setters-virtuals/#virtual-fields
        */
-      xit('Evalua a los primeros 23 caracteres del `content` anexado con "..."', function () {
+      it('Evalua a los primeros 23 caracteres del `content` anexado con "..."', function () {
         expect(article.snippet).to.equal("The South African cliff...");
 
         article.content =
@@ -132,7 +132,7 @@ describe("El modelo `Article`", function () {
       });
 
       // Esto es principalmente para evitar un caso limite visto durante `Model.update`
-      xit("retorna un empty string para contenido faltante", function () {
+      it("retorna un empty string para contenido faltante", function () {
         article.content = undefined;
 
         expect(article.snippet).to.equal("");
@@ -150,14 +150,14 @@ describe("El modelo `Article`", function () {
        *
        * https://sequelize.org/docs/v6/core-concepts/model-basics/#taking-advantage-of-models-being-classes
        */
-      xit("trunca el `content`", function () {
+      it("trunca el `content`", function () {
         expect(article.content).to.equal(fullText);
 
         article.truncate(12);
         expect(article.content).to.equal("The South Af");
       });
 
-      xit("acepta cualquier length", function () {
+      it("acepta cualquier length", function () {
         expect(article.content).to.equal(fullText);
 
         const randLength = Math.ceil(Math.random() * 20);
@@ -165,7 +165,7 @@ describe("El modelo `Article`", function () {
         expect(article.content).to.have.length(randLength);
       });
 
-      xit("No guarda la instancia una vez truncada", function () {
+      it("No guarda la instancia una vez truncada", function () {
         expect(article.content).to.equal(fullText);
 
         article.truncate(7);
@@ -196,7 +196,7 @@ describe("El modelo `Article`", function () {
         return Promise.all(articles);
       });
 
-      xit("Encuentra un artículo especifico por su `title`", function () {
+      it("Encuentra un artículo especifico por su `title`", function () {
         return Article.findByTitle("Migratory Birds").then(function (
           foundArticle
         ) {
@@ -216,7 +216,7 @@ describe("El modelo `Article`", function () {
      * https://sequelize.org/docs/v6/core-concepts/assocs/#one-to-one-relationships
      */
 
-    xit("pertenece a un user, que es guardado como el `author` del articulo", function () {
+    it("pertenece a un user, que es guardado como el `author` del articulo", function () {
       const creatingUser = User.create({ name: "Alatar the Blue" });
       const creatingArticle = Article.create({
         title: "Blue Wizards",
@@ -258,7 +258,7 @@ describe("El modelo `Article`", function () {
       });
     });
 
-    xit("es originalmente 0, incluso si no esta explicitamente seteado", function () {
+    it("es originalmente 0, incluso si no esta explicitamente seteado", function () {
       return Article.findOne({
         where: { title: "Biological Immortality" },
       }).then(function (foundArticle) {
@@ -266,7 +266,7 @@ describe("El modelo `Article`", function () {
       });
     });
 
-    xit("incrementa por 1 cada vez que el articulo se actualiza", function () {
+    it("incrementa por 1 cada vez que el articulo se actualiza", function () {
       return Article.findOne({ where: { title: "Biological Immortality" } })
         .then(function (foundArticle) {
           expect(foundArticle.version).to.equal(0);
@@ -304,7 +304,7 @@ describe("El modelo `Article`", function () {
      *
      * Para activar este spec, cambia `xit` a `it`
      */
-    xit("es un getter customizado", function () {
+    it("es un getter customizado", function () {
       // tags deberían tener un `defaultValue` que es un arreglo vacío.
       // console.dir(Article);
       expect(Article.tableAttributes.tags.defaultValue).to.deep.equal([]);
